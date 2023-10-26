@@ -40,16 +40,26 @@ After installing import into your project using the following:
 import '@cshawaus/lite-vimeo'
 ```
 
+## Usage with CommonJS
+
+CommonJS is supported for those who aren't ready to adopt ESM yet.
+
+```js
+require('@cshawaus/lite-vimeo')
+```
+
 ## Usage with jsDelivr
 
 If you want the paste-and-go version, you can simply load it via jsDelivr.
 
 ```html
 <!-- always the latest version -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo/lib/index.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo/lib/index.esm.js"></script>
 
 <!-- pinned to a specific version -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo@1.0.0/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo@1.0.0/lib/index.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo@1.0.0/lib/index.esm.js"></script>
 ```
 
 ## Basic Usage
