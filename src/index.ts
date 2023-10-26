@@ -181,8 +181,8 @@ export class LiteVimeoEmbed extends HTMLElement {
           display: none;
         }
       </style>
-      <div id="frame">
-        <picture>
+      <div id="frame" part="frame">
+        <picture part="picture-frame">
           <source id="webpPlaceholder" type="image/webp">
           <source id="jpegPlaceholder" type="image/jpeg">
           <img id="fallbackPlaceholder"
@@ -190,9 +190,10 @@ export class LiteVimeoEmbed extends HTMLElement {
                width="1100"
                height="619"
                decoding="async"
-               loading="lazy">
+               loading="lazy"
+               part="picture">
         </picture>
-        <button class="lvo-playbtn"></button>
+        <button class="lvo-playbtn" part="play-button"></button>
       </div>
     `
     this.domRefFrame = this.shadowRoot.querySelector<HTMLDivElement>('#frame')!
