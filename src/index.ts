@@ -1,9 +1,8 @@
 /**
- *
- * The shadowDom / Intersection Observer version of Paul's concept:
+ * The shadow DOM / Intersection Observer version of Paul's concept:
  * https://github.com/paulirish/lite-youtube-embed
  *
- * A lightweight YouTube embed. Still should feel the same to the user, just
+ * A lightweight Vimeo embed. Still should feel the same to the user, just
  * MUCH faster to initialize and paint.
  *
  * Thx to these as the inspiration
@@ -14,111 +13,96 @@
  *   https://github.com/ampproject/amphtml/blob/master/extensions/amp-youtube
  *   https://github.com/Daugilas/lazyYT https://github.com/vb/lazyframe
  */
-
-
-/*
- * Vimeo example embed markup:
-<iframe src="https://player.vimeo.com/video/364402896"
-  width="640" height="360"
-  frameborder="0"
-  allow="autoplay; fullscreen" allowfullscreen>
-</iframe>
-<p><a href="https://vimeo.com/364402896">
-  Alex Russell - The Mobile Web: MIA</a> from
-    <a href="https://vimeo.com/fronteers">Fronteers</a>
-    on <a href="https://vimeo.com">Vimeo</a>.
-</p>
- */
 export class LiteVimeoEmbed extends HTMLElement {
-  shadowRoot!: ShadowRoot;
-  private iframeLoaded = false;
-  private domRefFrame!: HTMLDivElement;
+  shadowRoot!: ShadowRoot
+
+  private iframeLoaded = false
+  private domRefFrame!: HTMLDivElement
   private domRefImg!: {
-    fallback: HTMLImageElement;
-    webp: HTMLSourceElement;
-    jpeg: HTMLSourceElement;
-  };
-  private domRefPlayButton!: HTMLButtonElement;
+    fallback: HTMLImageElement
+    webp: HTMLSourceElement
+    jpeg: HTMLSourceElement
+  }
+  private domRefPlayButton!: HTMLButtonElement
 
   constructor() {
-    super();
-    this.setupDom();
+    super()
+    this.setupDom()
   }
 
   static get observedAttributes(): string[] {
-    return ['videoid'];
+    return ['videoid']
   }
 
   connectedCallback(): void {
     this.addEventListener('pointerover', LiteVimeoEmbed.warmConnections, {
       once: true,
-    });
+    })
 
-    this.addEventListener('click', () => this.addIframe());
+    this.addEventListener('click', () => this.addIframe())
   }
 
   get videoId(): string {
-    return encodeURIComponent(this.getAttribute('videoid') || '');
+    return encodeURIComponent(this.getAttribute('videoid') || '')
   }
 
   set videoId(id: string) {
-    this.setAttribute('videoid', id);
+    this.setAttribute('videoid', id)
   }
 
   get videoTitle(): string {
-    return this.getAttribute('videotitle') || 'Video';
+    return this.getAttribute('videotitle') || 'Video'
   }
 
   set videoTitle(title: string) {
-    this.setAttribute('videotitle', title);
+    this.setAttribute('videotitle', title)
   }
 
   get videoPlay(): string {
-    return this.getAttribute('videoPlay') || 'Play';
+    return this.getAttribute('videoPlay') || 'Play'
   }
 
   set videoPlay(name: string) {
-    this.setAttribute('videoPlay', name);
+    this.setAttribute('videoPlay', name)
   }
 
   get videoStartAt(): string {
-    return this.getAttribute('videoPlay') || '0s';
+    return this.getAttribute('videoPlay') || '0s'
   }
 
   set videoStartAt(time: string) {
-    this.setAttribute('videoPlay', time);
+    this.setAttribute('videoPlay', time)
   }
 
   get autoLoad(): boolean {
-    return this.hasAttribute('autoload');
+    return this.hasAttribute('autoload')
   }
 
   set autoLoad(value: boolean) {
     if (value) {
-      this.setAttribute('autoload', '');
+      this.setAttribute('autoload', '')
     } else {
-      this.removeAttribute('autoload');
+      this.removeAttribute('autoload')
     }
   }
 
   get autoPlay(): boolean {
-    return this.hasAttribute('autoplay');
+    return this.hasAttribute('autoplay')
   }
 
   set autoPlay(value: boolean) {
     if (value) {
-      this.setAttribute('autoplay', 'autoplay');
+      this.setAttribute('autoplay', 'autoplay')
     } else {
-      this.removeAttribute('autoplay');
+      this.removeAttribute('autoplay')
     }
   }
-
 
   /**
    * Define our shadowDOM for the component
    */
   private setupDom(): void {
-    const shadowDom = this.attachShadow({mode: 'open'});
+    const shadowDom = this.attachShadow({ mode: 'open' })
     shadowDom.innerHTML = `
       <style>
         :host {
@@ -210,38 +194,27 @@ export class LiteVimeoEmbed extends HTMLElement {
         </picture>
         <button class="lvo-playbtn"></button>
       </div>
-    `;
-    this.domRefFrame = this.shadowRoot.querySelector<HTMLDivElement>('#frame')!;
+    `
+    this.domRefFrame = this.shadowRoot.querySelector<HTMLDivElement>('#frame')!
     this.domRefImg = {
-      fallback: this.shadowRoot.querySelector<HTMLImageElement>(
-        '#fallbackPlaceholder',
-      )!,
-      webp: this.shadowRoot.querySelector<HTMLSourceElement>(
-        '#webpPlaceholder',
-      )!,
-      jpeg: this.shadowRoot.querySelector<HTMLSourceElement>(
-        '#jpegPlaceholder',
-      )!,
-    };
-    this.domRefPlayButton = this.shadowRoot.querySelector<HTMLButtonElement>(
-      '.lvo-playbtn',
-    )!;
+      fallback: this.shadowRoot.querySelector<HTMLImageElement>('#fallbackPlaceholder')!,
+      webp: this.shadowRoot.querySelector<HTMLSourceElement>('#webpPlaceholder')!,
+      jpeg: this.shadowRoot.querySelector<HTMLSourceElement>('#jpegPlaceholder')!,
+    }
+    this.domRefPlayButton = this.shadowRoot.querySelector<HTMLButtonElement>('.lvo-playbtn')!
   }
 
   /**
    * Parse our attributes and fire up some placeholders
    */
   private setupComponent(): void {
-    this.initImagePlaceholder();
+    this.initImagePlaceholder()
 
-    this.domRefPlayButton.setAttribute(
-      'aria-label',
-      `${this.videoPlay}: ${this.videoTitle}`,
-    );
-    this.setAttribute('title', `${this.videoPlay}: ${this.videoTitle}`);
+    this.domRefPlayButton.setAttribute('aria-label', `${this.videoPlay}: ${this.videoTitle}`)
+    this.setAttribute('title', `${this.videoPlay}: ${this.videoTitle}`)
 
     if (this.autoLoad) {
-      this.initIntersectionObserver();
+      this.initIntersectionObserver()
     }
   }
 
@@ -251,26 +224,22 @@ export class LiteVimeoEmbed extends HTMLElement {
    * @param {*} oldVal
    * @param {*} newVal
    */
-  attributeChangedCallback(
-    name: string,
-    oldVal: unknown,
-    newVal: unknown,
-  ): void {
+  attributeChangedCallback(name: string, oldVal: unknown, newVal: unknown): void {
     switch (name) {
       case 'videoid': {
         if (oldVal !== newVal) {
-          this.setupComponent();
+          this.setupComponent()
 
           // if we have a previous iframe, remove it and the activated class
           if (this.domRefFrame.classList.contains('lvo-activated')) {
-            this.domRefFrame.classList.remove('lvo-activated');
-            this.shadowRoot.querySelector('iframe')!.remove();
+            this.domRefFrame.classList.remove('lvo-activated')
+            this.shadowRoot.querySelector('iframe')!.remove()
           }
         }
-        break;
+        break
       }
       default:
-        break;
+        break
     }
   }
 
@@ -289,93 +258,78 @@ export class LiteVimeoEmbed extends HTMLElement {
        *  </iframe>
        */
       // FIXME: add a setting for autoplay
-      const apValue = ((this.autoLoad && this.autoPlay) || (!this.autoLoad)) ?
-                        "autoplay=1" : "";
-      const srcUrl = new URL(
-        `/video/${this.videoId}?${apValue}&#t=${this.videoStartAt}`,
-        "https://player.vimeo.com/"
-      );
+      const apValue = (this.autoLoad && this.autoPlay) || !this.autoLoad ? 'autoplay=1' : ''
+      const srcUrl = new URL(`/video/${this.videoId}?${apValue}&#t=${this.videoStartAt}`, 'https://player.vimeo.com/')
 
       // TODO: construct src value w/ URL constructor
       const iframeHTML = `
 <iframe frameborder="0"
   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen src="${srcUrl}"></iframe>`;
-      this.domRefFrame.insertAdjacentHTML('beforeend', iframeHTML);
-      this.domRefFrame.classList.add('lvo-activated');
-      this.iframeLoaded = true;
+  allowfullscreen src="${srcUrl}"></iframe>`
+      this.domRefFrame.insertAdjacentHTML('beforeend', iframeHTML)
+      this.domRefFrame.classList.add('lvo-activated')
+      this.iframeLoaded = true
     }
   }
 
   /**
    * Setup the placeholder image for the component
    */
-  private async initImagePlaceholder(): Promise<any> {
+  private async initImagePlaceholder(): Promise<void> {
     // TODO(slightlyoff): TODO: cache API responses
 
     // we don't know which image type to preload, so warm the connection
-    LiteVimeoEmbed.addPrefetch('preconnect', 'https://i.vimeocdn.com/');
+    LiteVimeoEmbed.addPrefetch('preconnect', 'https://i.vimeocdn.com/')
 
     // API is the video-id based
     // http://vimeo.com/api/v2/video/364402896.json
-    const apiUrl = `https://vimeo.com/api/v2/video/${this.videoId}.json`;
+    const apiUrl = `https://vimeo.com/api/v2/video/${this.videoId}.json`
 
     // Now fetch the JSON that locates our placeholder from vimeo's JSON API
-    const apiResponse = (await (await fetch(apiUrl)).json())[0];
+    const apiResponse = (await (await fetch(apiUrl)).json())[0]
 
     // Extract the image id, e.g. 819916979, from a URL like:
     // thumbnail_large: "https://i.vimeocdn.com/video/819916979_640.jpg"
-    const tnLarge = apiResponse.thumbnail_large;
-    const imgId = (tnLarge.substr(tnLarge.lastIndexOf("/") + 1)).split("_")[0];
+    const tnLarge = apiResponse.thumbnail_large
+    const imgId = tnLarge.substr(tnLarge.lastIndexOf('/') + 1).split('_')[0]
 
     // const posterUrlWebp =
     //    `https://i.ytimg.com/vi_webp/${this.videoId}/hqdefault.webp`;
-    const posterUrlWebp =
-          `https://i.vimeocdn.com/video/${imgId}.webp?mw=1100&mh=619&q=70`;
-    const posterUrlJpeg =
-          `https://i.vimeocdn.com/video/${imgId}.jpg?mw=1100&mh=619&q=70`;
-    this.domRefImg.webp.srcset = posterUrlWebp;
-    this.domRefImg.jpeg.srcset = posterUrlJpeg;
-    this.domRefImg.fallback.src = posterUrlJpeg;
-    this.domRefImg.fallback.setAttribute(
-      'aria-label',
-      `${this.videoPlay}: ${this.videoTitle}`,
-    );
-    this.domRefImg.fallback.setAttribute(
-      'alt',
-      `${this.videoPlay}: ${this.videoTitle}`,
-    );
+    const posterUrlWebp = `https://i.vimeocdn.com/video/${imgId}.webp?mw=1100&mh=619&q=70`
+    const posterUrlJpeg = `https://i.vimeocdn.com/video/${imgId}.jpg?mw=1100&mh=619&q=70`
+    this.domRefImg.webp.srcset = posterUrlWebp
+    this.domRefImg.jpeg.srcset = posterUrlJpeg
+    this.domRefImg.fallback.src = posterUrlJpeg
+    this.domRefImg.fallback.setAttribute('aria-label', `${this.videoPlay}: ${this.videoTitle}`)
+    this.domRefImg.fallback.setAttribute('alt', `${this.videoPlay}: ${this.videoTitle}`)
   }
 
   /**
    * Setup the Intersection Observer to load the iframe when scrolled into view
    */
   private initIntersectionObserver(): void {
-    if (
-      'IntersectionObserver' in window &&
-      'IntersectionObserverEntry' in window
-    ) {
+    if ('IntersectionObserver' in window && 'IntersectionObserverEntry' in window) {
       const options = {
         root: null,
         rootMargin: '0px',
         threshold: 0,
-      };
+      }
 
       const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting && !this.iframeLoaded) {
-            LiteVimeoEmbed.warmConnections();
-            this.addIframe();
-            observer.unobserve(this);
+            LiteVimeoEmbed.warmConnections()
+            this.addIframe()
+            observer.unobserve(this)
           }
-        });
-      }, options);
+        })
+      }, options)
 
-      observer.observe(this);
+      observer.observe(this)
     }
   }
 
-  private static preconnected = false;
+  private static preconnected = false
 
   /**
    * Add a <link rel={preload | preconnect} ...> to the head
@@ -384,14 +338,14 @@ export class LiteVimeoEmbed extends HTMLElement {
    * @param {*} as
    */
   private static addPrefetch(kind: string, url: string, as?: string): void {
-    const linkElem = document.createElement('link');
-    linkElem.rel = kind;
-    linkElem.href = url;
+    const linkElem = document.createElement('link')
+    linkElem.rel = kind
+    linkElem.href = url
     if (as) {
-      linkElem.as = as;
+      linkElem.as = as
     }
-    linkElem.crossOrigin = 'true';
-    document.head.append(linkElem);
+    linkElem.crossOrigin = 'true'
+    document.head.append(linkElem)
   }
 
   /**
@@ -405,24 +359,24 @@ export class LiteVimeoEmbed extends HTMLElement {
    * Isolation and split caches adding serious complexity.
    */
   private static warmConnections(): void {
-    if (LiteVimeoEmbed.preconnected) return;
+    if (LiteVimeoEmbed.preconnected) return
     // Host that Vimeo uses to serve JS needed by player
-    LiteVimeoEmbed.addPrefetch('preconnect', 'https://f.vimeocdn.com');
+    LiteVimeoEmbed.addPrefetch('preconnect', 'https://f.vimeocdn.com')
 
     // The iframe document comes from player.vimeo.com
-    LiteVimeoEmbed.addPrefetch('preconnect', 'https://player.vimeo.com');
+    LiteVimeoEmbed.addPrefetch('preconnect', 'https://player.vimeo.com')
 
     // Image for placeholder comes from i.vimeocdn.com
-    LiteVimeoEmbed.addPrefetch('preconnect', 'https://i.vimeocdn.com');
+    LiteVimeoEmbed.addPrefetch('preconnect', 'https://i.vimeocdn.com')
 
-    LiteVimeoEmbed.preconnected = true;
+    LiteVimeoEmbed.preconnected = true
   }
 }
 // Register custom element
-customElements.define('lite-vimeo', LiteVimeoEmbed);
+customElements.define('lite-vimeo', LiteVimeoEmbed)
 
 declare global {
   interface HTMLElementTagNameMap {
-    'lite-vimeo': LiteVimeoEmbed;
+    'lite-vimeo': LiteVimeoEmbed
   }
 }

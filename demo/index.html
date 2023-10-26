@@ -1,13 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"
-    />
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes" />
     <title>lite-vimeo demo</title>
-    <script type="module" src="../lite-vimeo.js"></script>
+    <script type="module" src="../lib/index.js"></script>
     <style>
       * {
         box-sizing: content-box;
@@ -32,7 +29,6 @@
     </style>
   </head>
   <body>
-
     <h3>Basic Usage</h3>
     <pre>
 &lt;lite-vimeo videoid=&quot;364402896&quot;&gt;&lt;/lite-vimeo&gt;
@@ -44,10 +40,7 @@
 
 &lt;lite-vimeo videoid=&quot;364402896&quot; videotitle=&quot;This is a video title&quot;&gt;&lt;/lite-vimeo&gt;
     </pre>
-    <lite-vimeo
-      videoid="364402896"
-      videotitle="This is a video title"
-    ></lite-vimeo>
+    <lite-vimeo videoid="364402896" videotitle="This is a video title"></lite-vimeo>
 
     <h3>Change "Play" for Locale</h3>
     <pre>
@@ -57,11 +50,7 @@
    videotitle=&quot;Mis hijos se burlan de mi espa&ntilde;ol&quot;&gt;
 &lt;/lite-vimeo&gt;
     </pre>
-    <lite-vimeo
-      videoid="364402896"
-      videoplay="Mirar"
-      videotitle="Mis hijos se burlan de mi español"
-    ></lite-vimeo>
+    <lite-vimeo videoid="364402896" videoplay="Mirar" videotitle="Mis hijos se burlan de mi español"></lite-vimeo>
 
     <h3>Style It</h3>
     <p>Height and Width are responsive in the component.</p>
@@ -83,19 +72,13 @@
       <lite-vimeo videoid="364402896" start="5m30s"></lite-vimeo>
     </div>
 
-    <div id="bigBlock">
-      Scroll down to trigger autoLoad()
-    </div>
+    <div id="bigBlock">Scroll down to trigger autoLoad()</div>
     <h3>AutoLoad with IntersectionObserver</h3>
     <pre>
 
 &lt;lite-vimeo videoid=&quot;364402896&quot; videotitle=&quot;This is a video title&quot; <b>autoload</b>&gt;&lt;/lite-vimeo&gt;
     </pre>
-    <lite-vimeo
-      videoid="364402896"
-      videotitle="This is a video title"
-      autoload
-    ></lite-vimeo>
+    <lite-vimeo videoid="364402896" videotitle="This is a video title" autoload></lite-vimeo>
 
     <h3>Autoplay</h3>
     <pre>
@@ -107,6 +90,5 @@
     <div>
       <lite-vimeo videoid="364402896" autoload autoplay start="5m30s"></lite-vimeo>
     </div>
-
   </body>
 </html>

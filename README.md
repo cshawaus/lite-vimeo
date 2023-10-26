@@ -1,8 +1,8 @@
-[![npm version](https://badge.fury.io/js/%40slightlyoff%2Flite-vimeo.svg)](https://badge.fury.io/js/%40slightlyoff%2Flite-vimeo)
+[![npm version](https://badge.fury.io/js/%40cshawaus%2Flite-vimeo.svg)](https://badge.fury.io/js/%40cshawaus%2Flite-vimeo)
 
 # \<lite-vimeo\>
 
-> A web component that displays Vimeo embeds faster. Based on Justin Ribeiro's excellent [\<lite-youtube\>](https://github.com/justinribeiro/lite-youtube), which, in turn, is a Shadow DOM version of Paul's [lite-youtube-embed](https://github.com/paulirish/lite-youtube-embed).
+> A web component that displays Vimeo embeds faster. Based on Justin Ribeiro's excellent [\<lite-youtube\>](https://github.com/justinribeiro/lite-youtube), which, in turn, is a shadow DOM version of Paul's [lite-youtube-embed](https://github.com/paulirish/lite-youtube-embed) based on Alex Russell's [\<lite-vimeo\>](https://github.com/cshawaus/lite-vimeo/) package.
 
 This is basically a rebadge of Justin's component, but for Vimeo.
 
@@ -10,7 +10,7 @@ This is basically a rebadge of Justin's component, but for Vimeo.
 
 - No dependencies; it's just a vanilla web component.
 - It's fast yo.
-- It's Shadow Dom encapsulated!
+- It's shadow DOM encapsulated! (supports CSS `::part`)
 - It's responsive 16:9
 - It's accessible via keyboard and will set ARIA via the `videotitle` attribute
 - It's locale ready; you can set the `videoplay` to have a properly locale based label
@@ -21,28 +21,32 @@ This is basically a rebadge of Justin's component, but for Vimeo.
 ## Install
 
 This web component is built with ES modules in mind and is
-available on NPM:
-
-Install code-block:
+available on NPM.
 
 ```sh
-npm i @slightlyoff/lite-vimeo
+pnpm i @cshawaus/lite-vimeo
 # or
-yarn add @slightlyoff/lite-vimeo
+npm i @cshawaus/lite-vimeo
+# or
+yarn add @cshawaus/lite-vimeo
 ```
 
-After install, import into your project:
+After installing import into your project using the following:
 
 ```js
-import '@slightlyoff/lite-vimeo';
+import '@cshawaus/lite-vimeo'
 ```
 
-## Install with CDN
+## Usage with jsDelivr
 
-If you want the paste-and-go version, you can simply load it via CDN:
+If you want the paste-and-go version, you can simply load it via jsDelivr.
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/@slightlyoff/lite-vimeo@0.1.1/lite-vimeo.js">
+<!-- always the latest version -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo/lite-vimeo.js"></script>
+
+<!-- pinned to a specific version -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo@1.0.0/lite-vimeo.js"></script>
 ```
 
 ## Basic Usage
@@ -54,37 +58,50 @@ If you want the paste-and-go version, you can simply load it via CDN:
 ## Add Video Title
 
 ```html
-<lite-vimeo
-  videoid="364402896"
-  videotitle="This is a video title"
-></lite-vimeo>
+<lite-vimeo videoid="364402896" videotitle="This is a video title"></lite-vimeo>
 ```
 
 ## Change "Play" for Locale</h3>
 
 ```html
-<lite-vimeo
-  videoid="364402896"
-  videoplay="Mirar"
-  videotitle="Mis hijos se burlan de mi español"
-></lite-vimeo>
+<lite-vimeo videoid="364402896" videoplay="Mirar" videotitle="Mis hijos se burlan de mi español"></lite-vimeo>
 ```
 
-## Style It
+## Customise Everything
 
-Height and Width are responsive in the component.
+Bring your own CSS to the party anc customise the web component to your liking.
 
 ```html
 <style>
-  .styleIt {
-    width: 400px;
+  .vimeo-player {
     margin: auto;
+    max-width: 1024px;
+    width: 100%;
   }
 </style>
-<div class="styleIt">
+<div class="vimeo-player">
   <lite-vimeo videoid="364402896"></lite-vimeo>
 </div>
 ```
+
+### Using shadow DOM `::part`
+
+Because the shadow DOM exists outside of the normal page context it prevent global CSS from being applied. To overcome this you can make use of the `::part` CSS pseudo-element that can traverse the shadow tree and apply styles from the global context.
+
+```css
+.vimeo-player ::part(frame) {
+  border: 2px solid red;
+}
+```
+
+#### Available parts
+
+| CSS pseudo-element      | Description                                |
+| ----------------------- | ------------------------------------------ |
+| `::part(frame)`         | Targets the main player frame              |
+| `::part(picture-frame)` | Targets the `<picture>` element            |
+| `::part(picture)`       | Targets the `<img>` element in `<picture>` |
+| `::part(play-button)`   | Targets the play button                    |
 
 ## Set a video start time
 
@@ -93,15 +110,17 @@ Height and Width are responsive in the component.
 <lite-vimeo videoid="364402896" start="5m30s"></lite-vimeo>
 ```
 
-## AutoLoad with IntersectionObserver
+## Auto load with `IntersectionObserver`
 
-Uses Intersection Observer if available to automatically load the Vimeo iframe when scrolled into view.
+`IntersectionObserver` is used to automatically load the Vimeo iframe when scrolled into view. This can reduce performance in some circumstances with multiple players on the same page.
 
 ```html
 <lite-vimeo videoid="364402896" autoload></lite-vimeo>
 ```
 
-## Auto Play (requires AutoLoad)
+## Auto Play (requires auto load)
+
+When allowed by the browser the player will automatically start the vido upon it coming into view.
 
 ```html
 <lite-vimeo videoid="364402896" autoload autoplay></lite-vimeo>
@@ -112,11 +131,11 @@ Uses Intersection Observer if available to automatically load the Vimeo iframe w
 The web component allows certain attributes to be give a little additional
 flexibility.
 
-| Name         | Description                                                      | Default |
-| ------------ | ---------------------------------------------------------------- | ------- |
-| `videoid`    | The Vimeo videoid                                              | ``      |
-| `videotitle` | The title of the video                                           | `Video` |
-| `videoplay`  | The title of the play button (for translation)                   | `Play`  |
-| `autoload`   | Use Intersection Observer to load iframe when scrolled into view | `false` |
+| Name         | Description                                                                 | Default |
+| ------------ | --------------------------------------------------------------------------- | ------- |
+| `videoid`    | The Vimeo videoid                                                           | ``      |
+| `videotitle` | The title of the video                                                      | `Video` |
+| `videoplay`  | The title of the play button (for translation)                              | `Play`  |
+| `autoload`   | Use Intersection Observer to load iframe when scrolled into view            | `false` |
 | `autoplay`   | Video attempts to play automatically if auto-load set and browser allows it | `false` |
-| `start`      | Set the point at which the video should start, in seconds        | `0`     |
+| `start`      | Set the point at which the video should start, in seconds                   | `0`     |

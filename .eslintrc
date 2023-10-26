@@ -1,0 +1,70 @@
+{
+  "root": true,
+
+  "extends": [
+    "eslint:recommended",
+    "google",
+    "prettier",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+
+  "plugins": ["html", "lit", "prettier"],
+
+  "parser": "@typescript-eslint/parser",
+
+  "env": {
+    "browser": true
+  },
+
+  "globals": {
+    "customElements": false
+  },
+
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2020
+  },
+
+  "rules": {
+    "no-var": "error",
+    "require-jsdoc": "off",
+    "arrow-parens": "off",
+    "no-console": "off",
+    "new-cap": "off",
+    "brace-style": [2, "1tbs"],
+    "no-loop-func": "error",
+    "no-await-in-loop": "error",
+    "no-useless-call": "error",
+    "space-in-parens": "error",
+
+    "max-len": [
+      "error",
+      {
+        "ignoreTemplateLiterals": true,
+        "ignoreStrings": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+
+    "padded-blocks": [
+      "error",
+      {
+        "blocks": "never",
+        "classes": "never",
+        "switches": "never"
+      }
+    ]
+  },
+
+  "overrides": [
+    {
+      "files": ["tsup.config.js"],
+      "extends": ["plugin:node/recommended", "plugin:prettier/recommended"]
+    },
+    {
+      "files": ["**/*.ts"],
+      "extends": ["plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"]
+    }
+  ]
+}
