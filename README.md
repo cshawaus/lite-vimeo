@@ -1,6 +1,9 @@
-[![npm version](https://badge.fury.io/js/%40cshawaus%2Flite-vimeo.svg)](https://badge.fury.io/js/%40cshawaus%2Flite-vimeo)
-
 # \<lite-vimeo\>
+
+<p>
+  <a href="https://npmjs.com/package/@cshawaus/lite-vimeo"><img src="https://img.shields.io/npm/v/@cshawaus/lite-vimeo.svg" alt="npm package"></a>
+  <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/@cshawaus/lite-vimeo.svg" alt="node compatility"></a>
+</p>
 
 > A web component that displays Vimeo embeds faster. Based on Justin Ribeiro's excellent [\<lite-youtube\>](https://github.com/justinribeiro/lite-youtube), which, in turn, is a shadow DOM version of Paul's [lite-youtube-embed](https://github.com/paulirish/lite-youtube-embed) based on Alex Russell's [\<lite-vimeo\>](https://github.com/cshawaus/lite-vimeo/) package.
 
