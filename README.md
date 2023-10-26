@@ -46,10 +46,10 @@ If you want the paste-and-go version, you can simply load it via jsDelivr.
 
 ```html
 <!-- always the latest version -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo/lite-vimeo.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo/lib/index.js"></script>
 
 <!-- pinned to a specific version -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo@1.0.0/lite-vimeo.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cshawaus/lite-vimeo@1.0.0/lib/index.js"></script>
 ```
 
 ## Basic Usage
