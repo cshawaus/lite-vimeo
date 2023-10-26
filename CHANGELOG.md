@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/cshawaus/lite-vimeo/compare/v1.0.0...v1.0.1) (2023-10-26)
+
+
+### Bug Fixes
+
+* correct generated output files ([413f20b](https://github.com/cshawaus/lite-vimeo/commit/413f20b7cf9a6e49bf658a9882e085fdf0b4a139))
+* **docs:** correct jsdelivr url ([9cfbde3](https://github.com/cshawaus/lite-vimeo/commit/9cfbde395fbc87dcb6a97650eb775d334c7d1cea))
+
 # 1.0.0 (2023-10-26)
 
 ### Features
