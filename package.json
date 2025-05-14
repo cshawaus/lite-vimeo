@@ -3,7 +3,7 @@
   "description": "A fast drop-in web component replacement for Vimeo iframes that enables high-performance pages.",
   "homepage": "https://github.com/cshawaus/lite-vimeo",
   "license": "MIT",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Chris Shaw <me@cshaw.xyz>",
   "contributors": [
     {
