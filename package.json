@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cshawaus/lite-vimeo"
+    "url": "git+https://github.com/cshawaus/lite-vimeo.git"
   },
   "bugs": {
     "url": "https://github.com/cshawaus/lite-vimeo/issues"
