@@ -2,10 +2,10 @@
 
 <p>
   <a href="https://npmjs.com/package/@cshawaus/lite-vimeo"><img src="https://img.shields.io/npm/v/@cshawaus/lite-vimeo.svg" alt="npm package"></a>
-  <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/@cshawaus/lite-vimeo.svg" alt="node compatility"></a>
+  <a href="https://www.jsdelivr.com/package/npm/@cshawaus/lite-vimeo"><img src="https://data.jsdelivr.com/v1/package/npm/@cshawaus/lite-vimeo/badge" alt="node compatility"></a>
 </p>
 
-> A web component that displays Vimeo embeds faster. Based on Justin Ribeiro's excellent [\<lite-youtube\>](https://github.com/justinribeiro/lite-youtube), which, in turn, is a shadow DOM version of Paul's [lite-youtube-embed](https://github.com/paulirish/lite-youtube-embed) based on Alex Russell's [\<lite-vimeo\>](https://github.com/cshawaus/lite-vimeo/) package.
+> A web component that displays Vimeo embeds faster. Based on Justin Ribeiro's excellent [\<lite-youtube\>](https://github.com/justinribeiro/lite-youtube), which, in turn, is a shadow DOM version of Paul's [lite-youtube-embed](https://github.com/paulirish/lite-youtube-embed) based on Alex Russell's [\<lite-vimeo\>](https://github.com/slightlyoff/lite-vimeo) package.
 
 This is basically a rebadge of Justin's component, but for Vimeo.
 
